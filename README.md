@@ -10,7 +10,7 @@ But if you're using C as a learning or hobby tool, this should suit you well.
 ## Quickstart
 
 You will need `make`, `clang` and `lldb` installed. 
-These is present by default on macOS, and on Ubuntu can be installed with
+These are present by default on macOS, and on Ubuntu can be installed with
 `sudo apt install clang lldb`.
 
 ```shell
