@@ -2,9 +2,9 @@
 CC = clang
 DBG = lldb
 
-# PHONY targets override some default beahviours in makefiles
-# more on https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
-
+# We use .PHONY to tell make to always run these commands even if a file exists
+# with the same name in this directory. For more information on .PHONY, see
+# https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
 .PHONY: build-main
 build-main: build-dir
 	$(CC) -Wall -O0 -g -o build/main src/main.c
@@ -26,7 +26,7 @@ build-test: build-dir
 run: build-main
 	./build/main
 
-.PHONY: build-test
+.PHONY: test
 test: build-test
 	./build/test
 
