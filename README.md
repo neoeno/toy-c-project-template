@@ -1,62 +1,354 @@
 # Toy C Project Template
 
-This is a very simple template for a C project.
+A simple and beginner-friendly C project template designed for learning, experimentation, and small-scale development. This template provides a minimal structure for writing, testing, debugging, and running C programs without unnecessary complexity.
 
-It prioritises having the fewest elements and easiest setup. As a result, it cuts
-a few corners that you probably wouldn't want to cut in a professional C project.
+---
 
-But if you're using C as a learning or hobby tool, this should suit you well.
+## Features
 
-## Quickstart
+- Simple project structure
+- Fast setup
+- Unit testing support
+- Easy debugging with LLDB
+- Makefile automation
+- Suitable for beginners and hobby projects
 
-You will need `make`, `clang` and `lldb` installed. 
-These are present by default on macOS, and on Ubuntu can be installed with
-`sudo apt install clang lldb`.
+---
 
-```shell
-# Clone the repo, download a zip, or run...
-; mkdir my-c-project && cd my-c-project
-; npx degit neoeno/toy-c-project-template
+## Project Structure
 
-# Check `make`, `clang` and `lldb` are installed
-; make check
-
-# To build and run `src/main.c`
-; make run
-
-# To run the tests in `src/test.c`
-; make test
-
-# To start `src/main.c` in the debugger
-; make debug
-
-# To start `src/test.c` in the debugger
-; make debug-test
+```text
+toy-c-project-template/
+│
+├── src/
+│   ├── main.c
+│   ├── lib.c
+│   └── test.c
+│
+├── Makefile
+├── README.md
+└── .gitignore
 ```
 
-Note that a professional project would probably not use Make for all of these tasks.
+### File Description
 
-## How to write code
+| File | Description |
+|--------|-------------|
+| main.c | Program entry point |
+| lib.c | Main implementation logic |
+| test.c | Unit tests |
+| Makefile | Build, run, test and debug commands |
+| README.md | Project documentation |
 
-The project is structured as three files:
+---
 
-* `src/main.c`, whose `main` function gets run as the executable, and should probably mostly call functions in `lib.c`.
-* `src/lib.c` where most of your implementation code should go.
-* `src/test.c`, whose `main` function gets run as the tests.
+## Requirements
 
-My suggested workflow is:
+Before running the project, install:
 
-* Add functions to `lib.c`, verifying with tests in `test.c`.
-* Add code to `main.c` which calls functions in `lib.c`.
+### Ubuntu/Debian
 
-There is already some example code along these lines.
+```bash
+sudo apt update
+sudo apt install clang make lldb
+```
 
-## Tests
+### macOS
 
-This project uses a very basic set of C macros to facilitate tests. You can see
-examples of this in `src/test.c`.
+Required tools are usually pre-installed.
 
-My intention is that you use these tests just as a way to run bits of your code
-in your development workflow.
+Verify installation:
 
-You may want to experiment with creating more test macros that suit your project.
+```bash
+clang --version
+make --version
+lldb --version
+```
+
+---
+
+## Getting Started
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/toy-c-project-template.git
+cd toy-c-project-template
+```
+
+Or create a new project from the template:
+
+```bash
+mkdir my-c-project
+cd my-c-project
+```
+
+---
+
+## Available Commands
+
+### Check Environment
+
+```bash
+make check
+```
+
+Verifies that all required tools are installed correctly.
+
+---
+
+### Build and Run
+
+```bash
+make run
+```
+
+Compiles and executes the application.
+
+---
+
+### Run Tests
+
+```bash
+make test
+```
+
+Runs all unit tests located in `test.c`.
+
+---
+
+### Debug Application
+
+```bash
+make debug
+```
+
+Starts LLDB debugger for the application.
+
+---
+
+### Debug Tests
+
+```bash
+make debug-test
+```
+
+Starts LLDB debugger for test execution.
+
+---
+
+## Development Workflow
+
+Recommended workflow:
+
+### Step 1
+
+Write application logic inside:
+
+```c
+src/lib.c
+```
+
+Example:
+
+```c
+int add(int a, int b)
+{
+    return a + b;
+}
+```
+
+### Step 2
+
+Create tests inside:
+
+```c
+src/test.c
+```
+
+Example:
+
+```c
+ASSERT_EQ(add(2, 3), 5);
+```
+
+### Step 3
+
+Use functions in:
+
+```c
+src/main.c
+```
+
+Example:
+
+```c
+printf("%d\n", add(2, 3));
+```
+
+### Step 4
+
+Run tests:
+
+```bash
+make test
+```
+
+### Step 5
+
+Run application:
+
+```bash
+make run
+```
+
+---
+
+## Example Program
+
+### lib.c
+
+```c
+int multiply(int a, int b)
+{
+    return a * b;
+}
+```
+
+### main.c
+
+```c
+#include <stdio.h>
+
+int multiply(int a, int b);
+
+int main()
+{
+    printf("%d\n", multiply(5, 4));
+    return 0;
+}
+```
+
+Output:
+
+```text
+20
+```
+
+---
+
+## Testing
+
+Example test:
+
+```c
+ASSERT_EQ(10, multiply(5,2));
+ASSERT_EQ(15, multiply(3,5));
+```
+
+Run:
+
+```bash
+make test
+```
+
+Expected Output:
+
+```text
+All tests passed.
+```
+
+---
+
+## Debugging
+
+Launch debugger:
+
+```bash
+make debug
+```
+
+Useful LLDB Commands:
+
+```text
+breakpoint set --name main
+run
+next
+step
+continue
+quit
+```
+
+---
+
+## Coding Guidelines
+
+- Keep business logic inside `lib.c`
+- Keep `main.c` minimal
+- Write tests for every new function
+- Use meaningful function names
+- Follow consistent formatting
+- Avoid global variables where possible
+
+---
+
+## Common Make Commands
+
+| Command | Description |
+|----------|-------------|
+| make check | Verify dependencies |
+| make run | Build and execute |
+| make test | Run tests |
+| make debug | Debug application |
+| make debug-test | Debug tests |
+| make clean | Remove generated files |
+
+---
+
+## Troubleshooting
+
+### make: command not found
+
+Install Make:
+
+```bash
+sudo apt install make
+```
+
+### clang: command not found
+
+Install Clang:
+
+```bash
+sudo apt install clang
+```
+
+### lldb: command not found
+
+Install LLDB:
+
+```bash
+sudo apt install lldb
+```
+
+---
+
+## Future Improvements
+
+- Modular source files
+- Static library support
+- Code coverage reports
+- CI/CD integration
+- GitHub Actions
+- Advanced testing framework
+- Documentation generation
+
+---
+
+## License
+
+This project is available under the MIT License.
+
+---
+
+Built for learning, experimentation, and rapid C development.
