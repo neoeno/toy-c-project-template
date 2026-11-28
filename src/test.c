@@ -30,10 +30,22 @@ TEST(test_add) {
 TEST(test_string_assert) {
   ASSERT_STR_EQ("hello", "hello");
 }
+TEST(test_fibonacci) {
+    ASSERT(fibonacci(0) == 0);
+    ASSERT(fibonacci(1) == 1);
+    ASSERT(fibonacci(2) == 1);
+    ASSERT(fibonacci(3) == 2);
+    ASSERT(fibonacci(4) == 3);
+    ASSERT(fibonacci(5) == 5);
+    ASSERT(fibonacci(10) == 55);
+    ASSERT(fibonacci(-1) == -1);
+    ASSERT(fibonacci(47) == -1);
+}
 
 int main() {
   // Add a `RUN_TEST` line for each test function
   RUN_TEST(test_add);
   RUN_TEST(test_string_assert);
+  RUN_TEST(test_fibonacci);
   return failed;
 }

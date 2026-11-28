@@ -1,13 +1,29 @@
-# You can change these variables if you want to use a different compiler or debugger
-CC = clang
-DBG = lldb
+# Compiler, debugger, and output binary name
+CC      = clang
+DBG     = lldb
+TARGET  = my_project
 
-# We use .PHONY to tell make to always run these commands even if a file exists
-# with the same name in this directory. For more information on .PHONY, see
-# https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
+# Compiler and linker flags
+CFLAGS  = -std=c11 -Wall -Wextra -O0 -g -Iinclude
+LDFLAGS =
+LDLIBS  =
+
+# Automatically pick up all .c files in src/ except test.c
+SRCS    = $(filter-out src/test.c, $(wildcard src/*.c))
+
+# --- External Dependencies (uncomment and edit as needed) ---
+# Example 1: System library via pkg-config
+# CFLAGS += $(shell pkg-config --cflags sqlite3)
+# LDLIBS += $(shell pkg-config --libs sqlite3)
+
+# Example 2: Local/vendored library in vendor/
+# CFLAGS += -Ivendor/mylib
+# SRCS   += vendor/mylib/mylib.c
+# ------------------------------------------------------------
+
 .PHONY: build-main
 build-main: build-dir
-	$(CC) -Wall -O0 -g -o build/main src/main.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o build/$(TARGET) $(SRCS) $(LDLIBS)
 
 .PHONY: check
 check:
@@ -20,11 +36,11 @@ build-dir:
 
 .PHONY: build-test
 build-test: build-dir
-	$(CC) -Wall -O0 -g -o build/test src/test.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o build/test src/test.c $(filter-out src/main.c, $(SRCS)) $(LDLIBS)
 
 .PHONY: run
 run: build-main
-	./build/main
+	./build/$(TARGET)
 
 .PHONY: test
 test: build-test
@@ -32,7 +48,7 @@ test: build-test
 
 .PHONY: debug
 debug: build-main
-	$(DBG) ./build/main
+	$(DBG) ./build/$(TARGET)
 
 .PHONY: debug-test
 debug-test: build-test
